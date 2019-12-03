@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <style>
+    * { 
+     box-sizing: border-box;
+    }
+    
+    html, body, div, img {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    body {
+      line-height: 1;
+    }
+    [v-cloak] { display: none; }
+    #app { text-align: center; font-size: 30px; }
+    input {
+      font-size: 50px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    p {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<div id="app" v-cloak>
+  <p>Entrer le caractère du jour:</p>
+  <input v-model="char" maxlength=1>
+  <p v-if="message === 'NOEL'">
+    <a href="https://byscripts.github.io/AdventEnigma/">CLIQUE ICI</a>
+  </p>
+  <p v-else>{{ message }}</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      char: ''
+    }
+  },
+  computed: {
+    formattedChar() {
+      return this.char.toLocaleUpperCase();
+    },
+    message() {
+      if(!this.formattedChar) {
+        return '';
+      }
+
+      const data = this.store[this.formattedChar];
+
+      if(!data) {
+        return 'Ah ben non... ce caractère n\'existe pas.';
+      }
+      
+      if(moment(data.date).isAfter(undefined, 'day')) {
+        return 'Non, non, non... Pas encore ^^';
+      }
+      
+      return data.message;
+    },
+    store() {
+      return {
+		D: { date: '2019-12-01', message: 'Bon pour une promenade en bord de mer' },
+        B: { date: '2019-12-02', message: 'Bon pour 10 photos Telegram XXX (utilisable en plusieurs fois)' },
+        7: { date: '2019-12-03', message: 'Bon pour une soirée jeu vidéo de ton choix' },
+        F: { date: '2019-12-04', message: 'Bon pour un Old Wild West' },
+        O: { date: '2019-12-05', message: 'Bon pour une nouvelle plante' },
+        3: { date: '2019-12-06', message: 'Bon pour une boite de réglisse' },
+        8: { date: '2019-12-07', message: 'Cadeau C' },
+        2: { date: '2019-12-08', message: 'Bon pour un film de Noël plaid/canapé' },
+        M: { date: '2019-12-09', message: 'Bon pour une soirée Sushi' },
+        6: { date: '2019-12-10', message: 'Bon pour un bain à deux' },
+        C: { date: '2019-12-11', message: 'Cadeau A' },
+        K: { date: '2019-12-12', message: 'Bon pour 10 vidéos Telegram XXX (utilisable en plusieurs fois)' },
+        J: { date: '2019-12-13', message: 'Bon pour une soirée plateau TV' },
+        H: { date: '2019-12-14', message: 'Bon pour une raclette' },
+        9: { date: '2019-12-15', message: 'Bon pour une soirée ciné. Film de ton choix.' },
+        G: { date: '2019-12-16', message: 'Cadeau B' },
+        L: { date: '2019-12-17', message: 'Bon pour des biscuits faits maison' },
+        1: { date: '2019-12-18', message: 'Bon pour une soirée apéro' },
+        I: { date: '2019-12-19', message: 'Bon pour un Salad&Co.' },
+        N: { date: '2019-12-20', message: 'Bon pour une demande sexuelle insolite' },
+        E: { date: '2019-12-21', message: 'Cadeau D' },
+        A: { date: '2019-12-22', message: 'Bon pour un plat fait maison' },
+        5: { date: '2019-12-23', message: 'Bon pour un nouveau parfum' },
+        4: { date: '2019-12-24', message: 'NOEL' },
+      };
+    }
+  }
+})
+</script>
+</body>
+</html>
